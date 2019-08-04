@@ -1,6 +1,6 @@
 {
-  "name": "ecommerce",
-  "short_name": "ecommerce",
+  "name": "basic-ecommerce",
+  "short_name": "basic-ecommerce",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
