@@ -24,10 +24,12 @@ export default {
     CartProductBox
   },
   methods: {
-    ...mapActions(["placeOrder", "updateCartCount", "removeProduct"]),
+    ...mapActions(["placeOrder", "updateCartCount", "removeProduct","clearApiStatus"]),
     async onPlaceOrder() {
       await this.placeOrder();
-      this.$router.push({ name: "Home" });
+      
+      this.apiStatus === '404' ? this.$router.push({ name: "404Page" }) : this.$router.push({ name: "Home" });
+      this.clearApiStatus();      
     },
     returnToListingPage() {
       this.$router.push({ name: "ProductListingView" });
@@ -42,7 +44,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["cart", "isLoading"])
+    ...mapState(["cart", "isLoading","apiStatus"])
   }
 };
 </script>

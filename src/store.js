@@ -17,6 +17,7 @@ export default new Vuex.Store({
     products: [],
     isLoading: false,
     cart: [],
+    apiStatus: '',
   },
   actions: {
     async loadProducts({ commit }) {
@@ -30,8 +31,16 @@ export default new Vuex.Store({
     },
     async placeOrder({ commit, state }) {
       commit('SET_LOADING', true);
-      await axios.post(`${url}/order`, state.cart);
-      commit('PLACE_ORDER');
+      let apiResponse = null;
+      try {
+        apiResponse = await axios.post(`${url}/order`, state.cart);
+      } catch (err) {
+        apiResponse = err.response;
+      } finally {
+        console.log(apiResponse); // Could be success or error
+      }
+
+      commit('PLACE_ORDER', apiResponse);
       return commit('SET_LOADING', false);
     },
     updateCartCount({ commit }, payload) {
@@ -39,6 +48,9 @@ export default new Vuex.Store({
     },
     removeProduct({ commit }, product) {
       commit('REMOVE_PRODUCT', product);
+    },
+    clearApiStatus({ commit }) {
+      commit('CLEAR_API_STATUS');
     },
   },
   mutations: {
@@ -61,8 +73,12 @@ export default new Vuex.Store({
         state.cart.push(foundProduct);
       }
     },
-    PLACE_ORDER(state) {
-      state.cart = [];
+    PLACE_ORDER(state, response) {
+      if (response.status === 200) {
+        state.cart = [];
+      } else if (response.status === 404) {
+        state.apiStatus = '404';
+      }
     },
     UPDATE_CART_COUNT(state, payload) {
       if (!payload.flag && payload.product.count === 1) {
@@ -79,6 +95,9 @@ export default new Vuex.Store({
     REMOVE_PRODUCT(state, product) {
       const productToRemove = findProductInCart(state, product);
       state.cart.splice(state.cart.indexOf(productToRemove, 1));
+    },
+    CLEAR_API_STATUS(state) {
+      state.apiStatus = '';
     },
   },
 });
