@@ -10,7 +10,7 @@ Vue.use(Router);
 export default new Router({
   routes: [{
     path: '/',
-    name: 'home',
+    name: 'Home',
     component: Home,
   }, {
     path: '/CartPage',

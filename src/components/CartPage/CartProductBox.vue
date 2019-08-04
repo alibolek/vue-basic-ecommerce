@@ -4,7 +4,11 @@
     <div class="product-description">{{ product.name }}</div>
     <div class="price-button-wrapper">
       <div class="product-price">{{ product.price }} {{ product.currency }}</div>
-      <div class="product-button" @click="$emit('addToCart')">ADD BASKET</div>
+    </div>
+    <div class="update-cart">
+      <button class="product-button update" @click="$emit('updateCartCount')">-</button>
+      <input type="text" name="productCount" />
+      <button class="product-button update" @click="$emit('updateCartCount')">+</button>
     </div>
   </div>
 </template>
@@ -12,8 +16,8 @@
 <script>
 export default {
   props: {
-    product: { type: Object, required: true }
-  }
+    product: { type: Object, required: true },
+  },
 };
 </script>
 
@@ -66,5 +70,33 @@ export default {
   font-size: 15px;
   margin: 25px;
   color: #585555;
+}
+
+.button-wrapper {
+  position: absolute;
+  bottom: -125px;
+  display: flex;
+}
+
+button.product-button.update {
+  width: 28px;
+  height: 29px;
+  border-radius: 21px;
+  background: white;
+  color: black;
+  font-size: 17px;
+  border: 1px solid grey;
+}
+
+.update-cart {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+input[type="text"] {
+  width: 37px;
+  height: 19px;
+  text-align: center;
+  border: 1px solid grey;
 }
 </style>
