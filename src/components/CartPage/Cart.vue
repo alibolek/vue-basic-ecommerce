@@ -1,6 +1,11 @@
 <template>
   <div class="main-cart-wrapper">
-    <cart-product-box v-for="product in cart" :product="product" :key="product.id"></cart-product-box>
+    <cart-product-box
+      v-for="product in cart"
+      :product="product"
+      :key="product.id"
+      @updateCartCount="onUpdateCartCount"
+    ></cart-product-box>
     <div class="button-wrapper">
       <button class="product-button" @click="returnToListingPage">CONTINUE TO SHOPPING</button>
       <button class="product-button" @click="onPlaceOrder" :disabled="isLoading">PLACE ORDER</button>
@@ -17,17 +22,22 @@ export default {
     CartProductBox
   },
   methods: {
-    ...mapActions(["placeOrder"]),
+    ...mapActions(["placeOrder", "updateCartCount"]),
     async onPlaceOrder() {
       await this.placeOrder();
       this.$router.push({ name: "Home" });
     },
     returnToListingPage() {
       this.$router.push({ name: "ProductListingView" });
+    },
+    onUpdateCartCount(product,flag) {
+      const payload = {product:product,flag:flag};
+      
+      this.updateCartCount(payload);
     }
   },
   computed: {
-    ...mapState(["cart", "isLoading"])
+    ...mapState(["cart", "isLoading"]),
   }
 };
 </script>

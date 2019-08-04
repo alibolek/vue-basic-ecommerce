@@ -6,9 +6,9 @@
       <div class="product-price">{{ product.price }} {{ product.currency }}</div>
     </div>
     <div class="update-cart">
-      <button class="product-button update" @click="$emit('updateCartCount')">-</button>
-      <input type="text" name="productCount" />
-      <button class="product-button update" @click="$emit('updateCartCount')">+</button>
+      <button class="product-button update" @click="$emit('updateCartCount',product,false)">-</button>
+      <input type="text" v-model = "product.count"  name="productCount" />
+      <button class="product-button update" @click="$emit('updateCartCount',product,true)">+</button>
     </div>
   </div>
 </template>

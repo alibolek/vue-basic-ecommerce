@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-import { stat } from 'fs';
 
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
@@ -31,8 +30,8 @@ export default new Vuex.Store({
       commit('PLACE_ORDER');
       return commit('SET_LOADING', false);
     },
-    updateCartCount({ commit }, product) {
-      commit('UPDATE_CART_COUNT', product);
+    updateCartCount({ commit }, payload) {
+      commit('UPDATE_CART_COUNT', payload);
     },
   },
   mutations: {
@@ -58,8 +57,17 @@ export default new Vuex.Store({
     PLACE_ORDER(state) {
       state.cart = [];
     },
-    /*UPDATE_CART_COUNT(state, product) {
-          state.cart.product = isLoading;
-        }, */
+    UPDATE_CART_COUNT(state, payload) {
+      if (!payload.flag && payload.product.count === 1) {
+        return;
+      }
+      if (payload.flag && payload.product.count === 9) {
+        // eslint-disable-next-line no-alert
+        alert('We dont have that much product in our store :(');
+        return;
+      }
+      const updatedProduct = state.cart.find(cartProduct => payload.product.id === cartProduct.id);
+      updatedProduct.count = payload.flag ? updatedProduct.count += 1 : updatedProduct.count -= 1;
+    },
   },
 });
