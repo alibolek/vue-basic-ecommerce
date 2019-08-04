@@ -46,7 +46,7 @@ export default {
   position: absolute;
   justify-content: center;
   left: 50%;
-  width: 72%;
+  width: 56%;
   transform: translateX(-50%);
 }
 </style>

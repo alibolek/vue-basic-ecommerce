@@ -8,6 +8,10 @@ Vue.use(VueAxios, axios);
 
 const url = 'https://nonchalant-fang.glitch.me';
 
+function findProductInCart(state, product) {
+  return state.cart.find(cartProduct => product.id === cartProduct.id);
+}
+
 export default new Vuex.Store({
   state: {
     products: [],
@@ -33,6 +37,9 @@ export default new Vuex.Store({
     updateCartCount({ commit }, payload) {
       commit('UPDATE_CART_COUNT', payload);
     },
+    removeProduct({ commit }, product) {
+      commit('REMOVE_PRODUCT', product);
+    },
   },
   mutations: {
     SET_PRODUCTS(state, products) {
@@ -42,7 +49,7 @@ export default new Vuex.Store({
       state.isLoading = isLoading;
     },
     ADD_TO_CART(state, product) {
-      let foundProduct = state.cart.find(cartProduct => product.id === cartProduct.id);
+      let foundProduct = findProductInCart(state, product);
 
       if (foundProduct) {
         foundProduct.count += 1;
@@ -66,8 +73,12 @@ export default new Vuex.Store({
         alert('We dont have that much product in our store :(');
         return;
       }
-      const updatedProduct = state.cart.find(cartProduct => payload.product.id === cartProduct.id);
+      const updatedProduct = findProductInCart(state, payload.product);
       updatedProduct.count = payload.flag ? updatedProduct.count += 1 : updatedProduct.count -= 1;
+    },
+    REMOVE_PRODUCT(state, product) {
+      const productToRemove = findProductInCart(state, product);
+      state.cart.splice(state.cart.indexOf(productToRemove, 1));
     },
   },
 });

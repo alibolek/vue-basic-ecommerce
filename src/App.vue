@@ -2,8 +2,9 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/CartPage">CartView</router-link> |
-      <router-link to="/ProductListingPage">ProductListingView</router-link> |
+      <router-link to="/ProductListingPage">All Products</router-link>|
+      <router-link to="/CartPage">Cart Page</router-link> |
+      
     </div>
     <router-view/>
   </div>
@@ -16,6 +17,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  
 }
 #nav {
   padding: 30px;

@@ -5,11 +5,13 @@
       :product="product"
       :key="product.id"
       @updateCartCount="onUpdateCartCount"
+      @removeProduct="onRemoveCartItem"
     ></cart-product-box>
-    <div class="button-wrapper">
-      <button class="product-button" @click="returnToListingPage">CONTINUE TO SHOPPING</button>
+    <div v-if="cart.length > 0" class="button-wrapper">
+      <button class="product-button back" @click="returnToListingPage">< CONTINUE TO SHOPPING</button>
       <button class="product-button" @click="onPlaceOrder" :disabled="isLoading">PLACE ORDER</button>
     </div>
+    <h1 v-else>Your cart is empty. Go back and add something to cart!</h1>
   </div>
 </template>
 
@@ -22,7 +24,7 @@ export default {
     CartProductBox
   },
   methods: {
-    ...mapActions(["placeOrder", "updateCartCount"]),
+    ...mapActions(["placeOrder", "updateCartCount", "removeProduct"]),
     async onPlaceOrder() {
       await this.placeOrder();
       this.$router.push({ name: "Home" });
@@ -30,14 +32,17 @@ export default {
     returnToListingPage() {
       this.$router.push({ name: "ProductListingView" });
     },
-    onUpdateCartCount(product,flag) {
-      const payload = {product:product,flag:flag};
-      
+    onUpdateCartCount(product, flag) {
+      const payload = { product: product, flag: flag };
+
       this.updateCartCount(payload);
+    },
+    onRemoveCartItem(product) {
+      this.removeProduct(product);
     }
   },
   computed: {
-    ...mapState(["cart", "isLoading"]),
+    ...mapState(["cart", "isLoading"])
   }
 };
 </script>
@@ -52,30 +57,39 @@ export default {
   align-items: center;
   height: auto;
   flex-wrap: wrap;
-  align-self: center;
   position: absolute;
-  justify-content: center;
+  justify-content: flex-start;
   left: 50%;
-  width: 72%;
+  width: 63%;
   transform: translateX(-50%);
+  height: 70%;
 }
 .product-button {
   width: 150px;
   height: 39px;
-  display: flex;
-  background: #ff7102;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+  background: #ff4100cf;
   font-size: 14px;
   color: white;
   font-weight: 900;
   cursor: pointer;
-  margin-bottom: 20px;
+  border: unset;
 }
 .button-wrapper {
-  position: absolute;
-  bottom: -125px;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 50px;
+}
+button.product-button.back {
+  background: #ccc8c830;
+  color: black;
+  border: 0.7px;
+  border-style: outset;
+  width: 269px;
+}
+h1 {
+  margin: auto;
 }
 </style>

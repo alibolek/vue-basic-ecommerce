@@ -1,7 +1,7 @@
 <template>
   <div class="main-product-wrapper">
-    <div class="product-image" :style="{ backgroundImage:'url(' + product.image + ')' }"></div>
-    <div class="product-description">{{ product.name }}</div>
+    <div class="left-description-box">
+      <div class="product-image" :style="{ backgroundImage:'url(' + product.image + ')' }"></div>
     <div class="price-button-wrapper">
       <div class="product-price">{{ product.price }} {{ product.currency }}</div>
     </div>
@@ -9,6 +9,12 @@
       <button class="product-button update" @click="$emit('updateCartCount',product,false)">-</button>
       <input type="text" v-model = "product.count"  name="productCount" />
       <button class="product-button update" @click="$emit('updateCartCount',product,true)">+</button>
+    </div>
+    </div>
+    
+    <div class="right-description-box">
+    <div class="product-description">{{ product.name }}</div>
+    <button class="remove-product product-button" @click="$emit('removeProduct',product)">Remove</button>
     </div>
   </div>
 </template>
@@ -23,19 +29,16 @@ export default {
 
 <style scoped>
 .main-product-wrapper {
-  height: 339px;
+  height: 26%;
   border: 0.1px solid rgb(209, 203, 203);
   display: flex;
-  flex-direction: column;
-  flex: 1 0 719px;
-  margin: 0.1px;
-  max-width: 274px;
+  flex: 1 0 100%;
 }
 
 .product-image {
   width: 100%;
-  height: 100%;
-  background-size: 54% 171px;
+  height: 41%;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -45,6 +48,8 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+  width: 30%;
+  height: 24%;
 }
 
 .product-button {
@@ -59,38 +64,40 @@ export default {
   color: white;
   font-weight: 900;
   cursor: pointer;
-  margin-bottom: 20px;
-}
-
-.product-price {
-  margin-bottom: 20px;
+  margin-bottom: 65px;
+    border: 0;
+    margin-left: 11px;
 }
 
 .product-description {
-  font-size: 15px;
-  margin: 25px;
+  font-size: 24px;
   color: #585555;
 }
 
 .button-wrapper {
   position: absolute;
-  bottom: -125px;
+  bottom: 215px;
   display: flex;
 }
 
 button.product-button.update {
-  width: 28px;
-  height: 29px;
-  border-radius: 21px;
+  width: 25px;
+  height: 24px;
+  border-radius: 25px;
   background: white;
   color: black;
   font-size: 17px;
   border: 1px solid grey;
+  margin: unset;
 }
 
 .update-cart {
   display: flex;
   justify-content: space-evenly;
+  width: 100%;
+  align-items: center;
+  height: 17%;
+  flex-direction: row;
 }
 
 input[type="text"] {
@@ -98,5 +105,31 @@ input[type="text"] {
   height: 19px;
   text-align: center;
   border: 1px solid grey;
+}
+button.remove-product.product-button {
+    background: white;
+    color: black;
+    border: 1px groove;
+    margin: unset;
+}
+
+
+.left-description-box {
+    width: 40%;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.right-description-box {
+    width: 60%;
+    height: 100%;
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
 }
 </style>
