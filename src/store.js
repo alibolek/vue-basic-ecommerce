@@ -94,7 +94,7 @@ export default new Vuex.Store({
     },
     REMOVE_PRODUCT(state, product) {
       const productToRemove = findProductInCart(state, product);
-      state.cart.splice(state.cart.indexOf(productToRemove, 1));
+      state.cart.splice(state.cart.indexOf(productToRemove), 1);
     },
     CLEAR_API_STATUS(state) {
       state.apiStatus = '';

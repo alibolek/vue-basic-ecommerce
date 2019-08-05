@@ -3,7 +3,7 @@
     <cart-product-box
       v-for="product in cart"
       :product="product"
-      :key="product.id"
+      :key="product.name"
       @updateCartCount="onUpdateCartCount"
       @removeProduct="onRemoveCartItem"
     ></cart-product-box>
