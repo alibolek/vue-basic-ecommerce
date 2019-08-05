@@ -10,11 +10,9 @@ npm install
 ```
 NODE_ENV=development
 
-npm run serve
 ```
 ### Run for development
 ```
-NODE_ENV=development
 
 npm run serve
 ```
