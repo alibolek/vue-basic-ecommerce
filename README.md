@@ -1,25 +1,29 @@
-# basic-ecommerce
+# Welcome to my basic-ecommerce app with vue,vuex,vue-router.
 
-## Project setup
+## To install 
 ```
+cd vue-basic-ecommerce
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### To watch your changes instantly 
 ```
+NODE_ENV=development
+
 npm run serve
 ```
+### Run for development
+```
+NODE_ENV=development
+
+npm run serve
+```
+###
 
 ### Compiles and minifies for production
 ```
 npm run build
 ```
-
-### Run your tests
-```
-npm run test
-```
-
 ### Lints and fixes files
 ```
 npm run lint
@@ -30,5 +34,3 @@ npm run lint
 npm run test:unit
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
